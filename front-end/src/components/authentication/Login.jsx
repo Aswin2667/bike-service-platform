@@ -1,5 +1,4 @@
 import React from 'react'
-
 const Login = () => {
   return (
 <div class="relative flex h-full w-full">
@@ -9,19 +8,13 @@ const Login = () => {
         <p class="text-2xl">Login|</p>
         <p>please login to continue|</p>
       </div>
-      <div class="my-6">
-        <button class="flex w-full justify-center rounded-3xl border-none bg-white p-1 text-black hover:bg-gray-200 sm:p-2"><img src="https://freesvg.org/img/1534129544.png" class="mr-2 w-6 object-fill" />Sign in with Google</button>
-      </div>
-      <div>
-        <fieldset class="border-t border-solid border-gray-600">
-          <legend class="mx-auto px-2 text-center text-sm">Or login via our secure system</legend>
-        </fieldset>
-      </div>
+     
+      
       <div class="mt-10">
         <form>
           <div>
             <label class="mb-2.5 block font-extrabold" for="email">Email</label>
-            <input type="email" id="email" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" placeholder="mail@user.com" />
+            <input type="email" id="email" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" placeholder="aswin@gmail.com" />
           </div>
           <div class="mt-4">
             <label class="mb-2.5 block font-extrabold" for="email">Password</label>
@@ -37,6 +30,14 @@ const Login = () => {
             <button class="w-full rounded-full bg-orange-600 p-5 duration-500 hover:bg-orange-800">Login</button>
           </div>
         </form>
+      </div>
+      <div>
+        <fieldset class="border-t border-solid border-gray-600">
+          <legend class="mx-auto px-2 text-center text-sm">Or login via Google Account</legend>
+        </fieldset>
+      </div>
+      <div class="my-9">
+        <button class="flex w-full justify-center rounded-3xl border-none bg-white p-1 text-black hover:bg-gray-200 sm:p-2"><img src="https://freesvg.org/img/1534129544.png" class="mr-2 w-6 object-fill" />Sign in with Google</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { updateIndex } from "../slices/NavIndex";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
@@ -8,7 +10,9 @@ const Navbar = () => {
     { name: "Photos", icon: "camera-outline", dis: "translate-y-40 mt-11" },
     { name: "Settings", icon: "settings-outline", dis: "translate-y-64 mt-7" },
   ];
-  const [active, setActive] = useState(0);
+  const active = useSelector((state) => state.navindex.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <>
       <div className="bg-white h-screen w-20 pl-2 flex flex-col items-center justify-between pt-6 rounded-xl">
@@ -28,9 +32,12 @@ const Navbar = () => {
           </span>
           {Menus.map((menu, i) => (
             <li key={i} className="h-full w-16 relative">
-              <a
+              <a 
                 className="flex flex-col text-center pt-6"
-                onClick={() => setActive(i)}
+                onClick={() =>{
+                navigate(`/${menu.name}`)
+                dispatch(updateIndex(i))
+                }}
               >
                 <span
                   className={`text-xl cursor-pointer duration-500 ${

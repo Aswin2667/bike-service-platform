@@ -4,11 +4,13 @@ import PageNotFound from "./404/PageNotFound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
-import Profile from "./components/client//routes/Profile";
+import Profile from "./components/client/routes/Services";
 import Settings from "./components/client//routes/Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIndex } from "./slices/NavIndex";
 import { useState } from "react";
+import Chat from "./components/client/routes/Chat";
+import Bookings from "./components/client/routes/Bookings";
 function App() {
   const index = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
@@ -23,7 +25,9 @@ function App() {
           <Route path="/home" element={<Navbar />} />
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/Services" element={<Profile />} />
+          <Route path="bookings" element={<Bookings/>}/>
+          <Route path="/chat" element={<Chat />}/>
           <Route path="/settings" element={<Settings />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

@@ -1,51 +1,53 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+
 const Login = () => {
+  const handleChange =(e)=>{
+
+
+  }
+  const handleSubmit = (event)=>{
+
+  }
   return (
-<div class="relative flex h-full w-full">
-  <div class="h-screen w-1/2 bg-black">
-    <div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-      <div>
-        <p class="text-2xl">Login|</p>
-        <p>please login to continue|</p>
-      </div>
-     
-      
-      <div class="mt-10">
-        <form>
-          <div>
-            <label class="mb-2.5 block font-extrabold" for="email">Email</label>
-            <input type="email" id="email" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" placeholder="aswin@gmail.com" />
-          </div>
-          <div class="mt-4">
-            <label class="mb-2.5 block font-extrabold" for="email">Password</label>
-            <input type="password" id="email" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow" />
-          </div>
-          <div class="mt-4 flex w-full flex-col justify-between sm:flex-row">
-            <div><input type="checkbox" id="remember" /><label for="remember" class="mx-2 text-sm">Remember me</label></div>
-            <div>
-              <a href="#" class="text-sm hover:text-gray-200 hover:text-blue-400">Forgot password</a>
-            </div>
-          </div>
-          <div class="my-10">
-            <button class="w-full rounded-full bg-orange-600 p-5 duration-500 hover:bg-orange-800">Login</button>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-full max-w-md p-6 bg-gray-800 rounded-lg">
+        <div className="flex items-center justify-center gap-15 mb-6">
+          <img className="h-20 " src="src/assets/logo.svg" alt="logo" />
+          <h1 className="text-4xl text-white font-bold uppercase">bike service</h1>
+        </div>
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            onChange={(e) => handleChange(e)}
+            min="3"
+            className="w-full px-4 py-2 bg-transparent border-4 border-purple-600 rounded-md text-white text-lg mb-4 focus:outline-none focus:border-purple-400"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={(e) => handleChange(e)}
+            className="w-full px-4 py-2 bg-transparent border-4 border-purple-600 rounded-md text-white text-lg mb-4 focus:outline-none focus:border-purple-400 focus:border-3"
+          />
+          <button
+            type="submit"
+            className="w-full bg-purple-600  text-white py-2 rounded-md text-lg font-bold uppercase duration-500 hover:bg-purple-700 focus:outline-none "
+          >
+            Log In
+          </button>
+          <p className="mt-4 text-white">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-purple-600 font-bold">
+              Create One.
+            </Link>
+          </p>
         </form>
       </div>
-      <div>
-        <fieldset class="border-t border-solid border-gray-600">
-          <legend class="mx-auto px-2 text-center text-sm">Or login via Google Account</legend>
-        </fieldset>
-      </div>
-      <div class="my-9">
-        <button class="flex w-full justify-center rounded-3xl border-none bg-white p-1 text-black hover:bg-gray-200 sm:p-2"><img src="https://freesvg.org/img/1534129544.png" class="mr-2 w-6 object-fill" />Sign in with Google</button>
-      </div>
     </div>
-  </div>
-  <div class="h-screen w-1/2 bg-blue-600">
-    <img src="https://images.pexels.com/photos/2523959/pexels-photo-2523959.jpeg" class="h-full w-full" />
-  </div>
-</div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

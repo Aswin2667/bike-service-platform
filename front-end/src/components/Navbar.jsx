@@ -5,17 +5,20 @@ import { updateIndex } from "../slices/NavIndex";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
-    { name: "Profile", icon: "person-outline", dis: "translate-y-9 mt-5" },
-    { name: "Message", icon: "chatbubble-outline", dis: "translate-y-32" },
-    { name: "Photos", icon: "camera-outline", dis: "translate-y-40 mt-11" },
+    { name: "Services", icon: "person-outline", dis: "translate-y-9 mt-5" },
+    { name: "Chat", icon: "chatbubble-outline", dis: "translate-y-32" },
+    { name: "Bookings", icon: "camera-outline", dis: "translate-y-40 mt-11" },
     { name: "Settings", icon: "settings-outline", dis: "translate-y-64 mt-7" },
   ];
   const active = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleLogout = ()=>{
+    
+  }
   return (
     <>
-      <div className="bg-white h-screen w-20 pl-2 flex flex-col items-center justify-between pt-6 rounded-xl">
+      <div className="bg-white  h-screen w-20 p-2 flex flex-col items-center justify-between pt-6 rounded-xl">
         <ul className=" flex flex-col">
           <span
             className={`bg-rose-600 ${Menus[active].dis} duration-500  border-4 border-gray-900 h-16 w-16 absolute
@@ -60,7 +63,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <span className="text-3xl cursor-pointer mb-5 text-black hover:color-grey-600">
+        <span className="text-3xl cursor-pointer mb-5 text-black hover:color-grey-600" onClick={handleLogout}>
           <ion-icon name="log-out"></ion-icon>
         </span>
       </div>

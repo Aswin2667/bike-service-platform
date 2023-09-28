@@ -3,10 +3,10 @@ import Navbar from '../../Navbar'
 
 const Profile = () => {
   return (
-    <>
+    <div className='flex gap-5'>
     <Navbar/>
-    <div>Profile</div>
-    </>
+    <div className='text-white'>Profile</div>
+    </div>
     
   )
 }

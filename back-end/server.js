@@ -12,7 +12,6 @@ app.use(cors());
 con.on('open',()=>{
     console.log("DataBase connected.......");
 })
-
 app.use('/user',userRouter)
 app.listen(PORT,()=>{
     console.log(`server started at ${PORT}` );

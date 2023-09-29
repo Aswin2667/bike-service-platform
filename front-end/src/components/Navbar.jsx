@@ -6,12 +6,11 @@ import { message } from "antd";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
-    { name: "Services", icon: "person-outline", dis: "translate-y-9 mt-5" },
+    { name: "Services", icon: "construct", dis: "translate-y-9 mt-5" },
     { name: "Chat", icon: "chatbubble-outline", dis: "translate-y-32" },
-    { name: "Bookings", icon: "camera-outline", dis: "translate-y-40 mt-11" },
+    { name: "Bookings", icon: "cart", dis: "translate-y-40 mt-11" },
     { name: "Settings", icon: "settings-outline", dis: "translate-y-64 mt-7" },
   ];
-  
   const active = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,10 +21,10 @@ const Navbar = () => {
   }
   return (
     <>
-      <div className="bg-white  h-screen w-20 p-2 flex flex-col items-center justify-between pt-6 rounded-xl">
+      <div className="bg-white  h-screen w-20 p-2 flex flex-col items-center opacity-90 justify-between pt-6 rounded-l-none rounded-xl">
         <ul className=" flex flex-col">
           <span
-            className={`bg-rose-600 ${Menus[active].dis} duration-500  border-4 border-gray-900 h-16 w-16 absolute
+            className={`bg-purple-600 ${Menus[active].dis} duration-500  border-4 border-gray-900 h-16 w-16 absolute
           rounded-full ml-6 `}
           >
             <span

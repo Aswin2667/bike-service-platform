@@ -28,14 +28,15 @@
 }
 .bgTop {
     z-index: 15;
-    opacity: 0.5;
+    opacity: 0.05;
 }
 .bgMiddle {
     z-index: 10;
-    opacity: 0.75;
+    opacity: 0.05;
 }
 .bgBottom {
-    z-index: 5;
+    opacity: 0.05;
+    z-index: 35;
 }
 .wave {
     position: absolute;
@@ -65,5 +66,5 @@
     background-size: 50% 100px;
 }
 .waveAnimation .waveBottom {
-    animation: move_wave 10s linear infinite;
+    animation: move_wave 9s linear infinite;
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {message} from "antd"
 import { useNavigate ,Link} from 'react-router-dom';
 import UserService from '../../services/UserService';
+import AnimatedBG from '../Background/AnimatedBG';
 const Register = () => {
   const [formData, setFormData] = useState({
     username:"",
@@ -57,7 +58,7 @@ const Register = () => {
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md p-6 bg-gray-800 rounded-lg">
+      <div className="w-full max-w-md p-6 bg-gray-800 z-40 bg-opacity-70 rounded-lg">
       <div className="flex items-center justify-center gap-15 mb-6">
           <img className="h-20 " src="src/assets/logo.svg" alt="logo" />
           <h1 className="text-4xl text-white font-bold uppercase">bike service</h1>
@@ -107,6 +108,7 @@ const Register = () => {
           </p>
         </form>
       </div>
+      <AnimatedBG />
     </div>
   );
 };

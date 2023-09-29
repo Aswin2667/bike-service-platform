@@ -11,18 +11,16 @@ import { updateIndex } from "./slices/NavIndex";
 import { useState } from "react";
 import Chat from "./components/client/routes/Chat";
 import Bookings from "./components/client/routes/Bookings";
+import Home from "./components/client/routes/Home";
 function App() {
   const index = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
   const [num,setNum] = useState(0);
   return (
     <div className="h-screen bg-grey-900">
-      {/* <h1>{index}</h1>
-      <button onClick={()=> setNum(num+1)}>incr</button>
-      <button onClick={()=>dispatch(updateIndex(num))}>hello</button> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Navbar />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/Services" element={<Profile />} />

@@ -1,17 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import UserService from "../../services/UserService";
+import { message } from "antd";
+import AnimatedBG from "../Background/AnimatedBG";
+UserService
 const Login = () => {
-  const handleChange =(e)=>{
-
-
-  }
-  const handleSubmit = (event)=>{
-
+  const [formData, setFormData] = useState({
+    username:"",
+    password: ""
+  });
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const validateForm = () => {
+    const username = formData.username;
+    if(username.length<3){
+      message.error("UserName must be greater than or Equal to 3 characters!!");
+      return false ;
+    }
+    return true;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(validateForm()){
+      UserService.findUser(formData).then((response)=>{
+        const User = response.data;
+        if(!User.status){
+          message.error(User.msg);
+          return;
+        }
+        message.success("Logged In Successfully :) ");
+        navigate("/home");
+      }).catch((err)=>{
+        console.log(err);
+      })
+    } 
+  };
+  const handleKeyPress = (e)=>{
+    if(e.key==="Enter"){
+      handleSubmit(e);
+    }
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md p-6 bg-gray-800 rounded-lg">
+      <div className="w-full z-40 max-w-md p-6 bg-gray-800 bg-opacity-70 rounded-lg">
         <div className="flex items-center justify-center gap-15 mb-6">
           <img className="h-20 " src="src/assets/logo.svg" alt="logo" />
           <h1 className="text-4xl text-white font-bold uppercase">bike service</h1>
@@ -46,6 +83,8 @@ const Login = () => {
           </p>
         </form>
       </div>
+      <AnimatedBG />
+      
     </div>
   );
 };

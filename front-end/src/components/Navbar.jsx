@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateIndex } from "../slices/NavIndex";
+import { message } from "antd";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
@@ -10,11 +11,14 @@ const Navbar = () => {
     { name: "Bookings", icon: "camera-outline", dis: "translate-y-40 mt-11" },
     { name: "Settings", icon: "settings-outline", dis: "translate-y-64 mt-7" },
   ];
+  
   const active = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = ()=>{
+    message.success("Logged out Successfully :)");
     
+    navigate("/");
   }
   return (
     <>

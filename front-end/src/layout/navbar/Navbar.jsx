@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { updateIndex } from "../slices/NavIndex";
+import { updateIndex } from "../../store/NavIndex";
 import { message } from "antd";
 const Navbar = () => {
   const Menus = [

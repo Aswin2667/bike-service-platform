@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../../Navbar'
+import Navbar from '../../layout/navbar/Navbar'
 
 const Settings = () => {
   return (

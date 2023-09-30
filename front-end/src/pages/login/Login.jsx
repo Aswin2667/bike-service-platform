@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userservice/UserService";
 import { message } from "antd";
-import AnimatedBG from "../Background/AnimatedBG";
-UserService
+import AnimatedBG from "../../components/login_BG/AnimatedBG";
+import { validateLoginForm } from "../../utils/helper/validation";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     username:"",
@@ -17,17 +18,9 @@ const Login = () => {
       [name]: value,
     });
   };
-  const validateForm = () => {
-    const username = formData.username;
-    if(username.length<3){
-      message.error("UserName must be greater than or Equal to 3 characters!!");
-      return false ;
-    }
-    return true;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(validateForm()){
+    if(validateLoginForm(formData)){
       UserService.findUser(formData).then((response)=>{
         const User = response.data;
         if(!User.status){
@@ -50,7 +43,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-full z-40 max-w-md p-6 bg-gray-800 bg-opacity-70 rounded-lg">
         <div className="flex items-center justify-center gap-15 mb-6">
-          <img className="h-20 " src="src/assets/logo.svg" alt="logo" />
+          <img className="h-20 " src="src/assets/icons/logo.svg" alt="logo" />
           <h1 className="text-4xl text-white font-bold uppercase">bike service</h1>
         </div>
         <form onSubmit={(event) => handleSubmit(event)}>

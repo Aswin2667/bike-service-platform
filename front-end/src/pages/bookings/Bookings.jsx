@@ -1,7 +1,7 @@
 import React from 'react'
-import Navbar from '../../Navbar'
+import Navbar from '../../layout/navbar/Navbar'
 
-const Booking = () => {
+const Bookings = () => {
   return (
     <div className='flex'>
         <Navbar />
@@ -9,4 +9,4 @@ const Booking = () => {
     </div>
   )
 }
-export default Booking
+export default Bookings

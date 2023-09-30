@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../../Navbar'
-import WaveAnimation from '../../Background/WaveAnimation'
+import Navbar from '../../layout/navbar/Navbar'
+import WaveAnimation from '../../components/home_BG/WaveAnimation'
 
 const Home = () => {
   return (

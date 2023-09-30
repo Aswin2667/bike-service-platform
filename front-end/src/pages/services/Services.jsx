@@ -1,7 +1,7 @@
 import React from 'react'
-import Navbar from '../../Navbar'
+import Navbar from '../../layout/navbar/Navbar'
 
-const Profile = () => {
+const Services = () => {
   return (
     <div className='flex gap-5'>
     <Navbar/>
@@ -11,4 +11,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Services

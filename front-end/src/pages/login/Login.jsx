@@ -4,6 +4,9 @@ import UserService from "../../services/userservice/UserService";
 import { message } from "antd";
 import AnimatedBG from "../../components/login_BG/AnimatedBG";
 import { validateLoginForm } from "../../utils/helper/validation";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../../slices/AuthToken";
+import { setAuthenticated } from "../../slices/isAuthenticated";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,16 +21,22 @@ const Login = () => {
       [name]: value,
     });
   };
+  const token = useSelector((state)=>state.Token.value);
+  const user = useSelector((state)=> state.user.user);
+  const isAuthenticated = useSelector((state) => state.Authenticated.value);
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     if(validateLoginForm(formData)){
-      UserService.findUser(formData).then((response)=>{
-        const User = response.data;
-        if(!User.status){
-          message.error(User.msg);
+      UserService.loginUser(formData).then((response)=>{
+        const {status,token} = response.data;
+        if(!status){
+          message.error(response.data.msg);
           return;
         }
         message.success("Logged In Successfully :) ");
+        dispatch(setToken(token));
+        dispatch(setAuthenticated());
         navigate("/home");
       }).catch((err)=>{
         console.log(err);

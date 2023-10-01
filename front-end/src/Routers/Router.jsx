@@ -13,7 +13,7 @@ Services
 const Router = () => {
   return (
     <div className="h-screen bg-grey-900">
-      <BrowserRouter>
+      
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
@@ -24,7 +24,7 @@ const Router = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </div>
   )
 }

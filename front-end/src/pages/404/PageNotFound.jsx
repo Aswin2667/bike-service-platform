@@ -6,7 +6,7 @@ const PageNotFound = () => {
 
      <div className="container">
       <div className="gif">
-        <img src="https://i.postimg.cc/2yrFyxKv/giphy.gif" alt="gif_ing" />
+        <img src="src/assets/videos/PageNotFound.gif" alt="gif_ing" />
       </div>
       <div className="content">
         <h1 className="main-heading" > ERROR 404 - This page is gone.</h1>

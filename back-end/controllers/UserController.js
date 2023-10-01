@@ -39,6 +39,7 @@ module.exports.register = async (req, res, next) => {
     }
     console.log(req.body);
 }
+
 module.exports.login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
@@ -73,8 +74,6 @@ module.exports.login = async (req, res, next) => {
 }
 module.exports.verifytoken = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
-    console.log(token)
-    
     if(!token){
        return res.status(404).json({message:"No token found"});
     }
@@ -83,7 +82,6 @@ module.exports.verifytoken = (req, res, next) => {
             console.log(token);
              res.status(400).json({message:" Token Expired"});
         }
-        console.log(user.id);
         req.id = user.id;
         });
       next();

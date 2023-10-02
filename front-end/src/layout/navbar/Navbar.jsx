@@ -11,7 +11,7 @@ const Navbar = () => {
     { name: "Services", icon: "construct", dis: "translate-y-9 mt-5" },
     { name: "Chat", icon: "chatbubble-outline", dis: "translate-y-32" },
     { name: "Bookings", icon: "cart", dis: "translate-y-40 mt-11" },
-    { name: "Settings", icon: "settings-outline", dis: "translate-y-64 mt-7" },
+    { name: "Profile", icon: "settings-outline", dis: "translate-y-64 mt-7" },
   ];
 
   const active = useSelector((state) => state.navindex.value);

@@ -4,7 +4,7 @@ import UserService from "../../services/userservice/UserService";
 import { message } from "antd";
 import AnimatedBG from "../../components/login_BG/AnimatedBG";
 import { validateLoginForm } from "../../utils/helper/validation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setToken } from "../../slices/AuthToken";
 import { setAuthenticated } from "../../slices/isAuthenticated";
 
@@ -21,9 +21,7 @@ const Login = () => {
       [name]: value,
     });
   };
-  const token = useSelector((state)=>state.Token.value);
-  const user = useSelector((state)=> state.user.user);
-  const isAuthenticated = useSelector((state) => state.Authenticated.value);
+
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -22,7 +22,7 @@ const Home = () => {
   }
   }, []);
   return (
-    <div className="flex  ">
+    <div className="flex gap-5 w-screen">
       {isAuthenticated && (
         <>
           <div className="z-40 flex gap-6">

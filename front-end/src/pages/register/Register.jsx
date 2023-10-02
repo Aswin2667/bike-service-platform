@@ -4,15 +4,21 @@ import { useNavigate ,Link} from 'react-router-dom';
 import AnimatedBG from '../../components/login_BG/AnimatedBG';
 import { validateForm } from '../../utils/helper/validation';
 import UserService from '../../services/userservice/UserService';
+import SetAvatar from '../../components/setavatar/SetAvatar';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../slices/User';
 const Register = () => {
   const [formData, setFormData] = useState({
     username:"",
     email: '',
     password: '',
     confirmPassword: '',
+    isAvatarImageSet:false,
+    avatarimage:"",
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [avatar,setAvatar] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,24 +27,6 @@ const Register = () => {
       [name]: value,
     });
   };
-  // const validateForm = (user) => {
-  //   const {username, password,confirmPassword,email} = user;
-  //   if(password!==confirmPassword){
-  //     message.error("Password doesn't match!");
-  //     return false;
-  //   }
-  //   if(username.length<3){
-  //     message.error("UserName must be greater than or Equal to 3 characters!!");
-  //     return false ;
-  //   }
-  //   if(!/^\S+@\S+\.\S+$/.test(email)){
-  //       message.error("Please Enter a Valid E-mail address!!");
-  //       return false;
-  //   }
-  //   return true;
-  // };
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if(validateForm(formData)){
@@ -49,8 +37,8 @@ const Register = () => {
           return;
         }
         setIsLoading(true);
-        message.success("Regiteration success. You can log in now :) ");
-        navigate("/");
+        dispatch(updateUser(User.user));
+        setAvatar(true)
       }).catch((err)=>{
         console.log(err);
       })
@@ -62,6 +50,7 @@ const Register = () => {
     }
   }
   return (
+    !avatar ?
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-full max-w-md p-6 bg-gray-800 z-40 bg-opacity-70 rounded-lg">
       <div className="flex items-center justify-center gap-15 mb-6">
@@ -114,7 +103,8 @@ const Register = () => {
         </form>
       </div>
       <AnimatedBG />
-    </div>
+    </div>:
+    <SetAvatar />
   );
 };
 

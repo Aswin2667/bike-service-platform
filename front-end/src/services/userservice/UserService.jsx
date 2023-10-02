@@ -17,6 +17,9 @@ class UserService {
          
           return axios.get(`${USER_API_BASE_URL}/auth`, { headers });
     }
+    setAvatar(ID,avatarimage){
+        return axios.post(USER_API_BASE_URL+"/setAvatar/"+ID,avatarimage);
+    }
 
 }
 export default new UserService();

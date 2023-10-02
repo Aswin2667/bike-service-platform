@@ -5,7 +5,7 @@ import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
 import Services from '../pages/services/Services';
 import Bookings from '../pages/bookings/Bookings';
-import Settings from '../pages/settings/Settings';
+import Profile from '../pages/profile/Profile';
 import PageNotFound from '../pages/404/PageNotFound';
 import Chat from '../pages/chat/Chat';
 
@@ -21,7 +21,7 @@ const Router = () => {
           <Route path="/Services" element={<Services />} />
           <Route path="bookings" element={<Bookings/>}/>
           <Route path="/chat" element={<Chat />}/>
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       {/* </BrowserRouter> */}

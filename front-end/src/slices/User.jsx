@@ -28,6 +28,9 @@ export const User = createSlice({
     updateRole: (state, action) => {
       state.user.role = action.payload;
     },
+    updateisAvatarImageSet:((state,action)=>{
+      state.user.isAvatarImageSet=true;
+    }),
     updateAvatarImage: (state, action) => {
       state.user.avatarimage = action.payload;
     },
@@ -40,6 +43,7 @@ export const {
   updateEmail,
   updateRole,
   updateAvatarImage,
+  updateisAvatarImageSet,
 } = User.actions;
 
 export default User.reducer;

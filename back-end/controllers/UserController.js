@@ -99,3 +99,22 @@ module.exports.getUser = async (req, res, next) => {
   }
   return res.status(200).json({user});
 } 
+module.exports.setAvatar = async (req,res,next)=>{
+    try{
+        const userId = req.params.id;
+        const avatarimage = req.body.avatarimage;
+        const userData = await User.findByIdAndUpdate(
+            userId,
+            {
+                isAvatarImageSet:true,
+                avatarimage
+            }
+        );
+        return res.json({
+            msg:"Profile Set Successfully",
+            status:true
+        })
+    }catch(err){
+        next(err)
+    }
+}

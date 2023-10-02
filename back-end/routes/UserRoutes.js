@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register ,login, verifytoken,getUser} = require('../controllers/UserController');
+const { register ,login, verifytoken,getUser,setAvatar} = require('../controllers/UserController');
 
 /**
  * @swagger
@@ -155,4 +155,7 @@ router.post('/register', register);
  *                   description: Error message.
  */
 router.get("/auth",verifytoken,getUser);
+
+
+router.post("/setAvatar/:id",setAvatar)
 module.exports = router 

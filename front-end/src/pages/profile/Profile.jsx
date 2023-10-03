@@ -1,18 +1,36 @@
 import React,{ useState } from "react";
 import Navbar from "../../layout/navbar/Navbar";
 import "./profile.css"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
+import { updateUser } from "../../slices/User";
+import {setAuthenticated} from "../../slices/isAuthenticated"
+import { useNavigate } from "react-router-dom";
+import {updateIndex} from "../../slices/NavIndex";
 const Profile = () => {
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(textToCopy);
     message.success("ID copied to clipboard");
   };
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const User = useSelector((state)=>state.user.user);
   const [textToCopy, setTextToCopy] = useState(User._id);
-  const Logout = ()=>{
-
-  }
+  const handleLogout = ()=>{
+    dispatch(updateUser({
+       _id: "",
+       username: "",
+       email: "",
+       role: "",
+       isAvatarImageSet: false,
+       avatarimage: "",
+       __v: 0,
+     }));
+     dispatch(setAuthenticated());
+     dispatch(updateIndex(0));
+     message.success("Logged out Successfully :)");
+     navigate("/");
+   }
   return (
     <div className="flex flex-row gap-5 w-screen">
       <Navbar />
@@ -32,7 +50,7 @@ const Profile = () => {
             </p>
             <h3 onClick={handleCopyClick} title="Click to copy ID " className="text-xl font-serif hover:cursor-pointer">{User._id}</h3>
             <div className="flex justify-center items-center bg-purple-800 text-left mt-6 hover:bg-purple-600 duration-500 rounded">
-              <button onClick={Logout()} className="cursor-pointer atext-2xl uppercase text-gray-400 p-4 h-full w-full text-center">
+              <button onClick={handleLogout} className="cursor-pointer atext-2xl uppercase text-gray-400 p-4 h-full w-full text-center">
                 Logout
               </button>
             </div>

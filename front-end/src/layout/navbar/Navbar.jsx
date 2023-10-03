@@ -1,36 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { updateIndex } from "../../slices/NavIndex";
-import { message } from "antd";
+
 import { updateUser } from "../../slices/User";
 import { setAuthenticated } from "../../slices/isAuthenticated";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
-    { name: "Services", icon: "construct", dis: "translate-y-9 mt-5" },
+    { name: "Services", icon: "construct-outline", dis: "translate-y-9 mt-5" },
     { name: "Chat", icon: "chatbubble-outline", dis: "translate-y-32" },
-    { name: "Bookings", icon: "cart", dis: "translate-y-40 mt-11" },
-    { name: "Profile", icon: "settings-outline", dis: "translate-y-64 mt-7" },
+    { name: "Bookings", icon: "cart-outline", dis: "translate-y-40 mt-11" },
+    { name: "Profile", icon: "person-outline", dis: "translate-y-64 mt-7" },
   ];
 
   const active = useSelector((state) => state.navindex.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = ()=>{
-   dispatch(updateUser({
-      _id: "",
-      username: "",
-      email: "",
-      role: "",
-      isAvatarImageSet: false,
-      avatarimage: "",
-      __v: 0,
-    }));
-    dispatch(setAuthenticated());
-    message.success("Logged out Successfully :)");
-    navigate("/");
-  }
   return (
     <>
       <div className="bg-white  h-screen w-20 p-2 flex flex-col items-center opacity-90 justify-between pt-6 rounded-l-none rounded-xl">
@@ -78,9 +64,6 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <span className="text-3xl cursor-pointer mb-5 text-black hover:color-grey-600" onClick={handleLogout}>
-          <ion-icon name="log-out"></ion-icon>
-        </span>
       </div>
     </>
   );

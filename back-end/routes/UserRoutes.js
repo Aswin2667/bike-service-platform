@@ -7,6 +7,8 @@ const { register ,login, verifytoken,getUser,setAvatar} = require('../controller
  * /user/login:
  *   post:
  *     summary: User login.
+ *     tags:
+ *       - User
  *     description: Authenticate a user with username and password.
  *     requestBody:
  *       required: true
@@ -64,6 +66,8 @@ router.post('/login',login);
  * /user/register:
  *   post:
  *     summary: Register a new user.
+ *     tags:
+ *       - User
  *     description: Create a new user account with a unique username and email.
  *     requestBody:
  *       required: true
@@ -123,6 +127,8 @@ router.post('/register', register);
  * /user/auth:
  *   get:
  *     summary: Get authenticated user details.
+ *     tags:
+ *       - User
  *     description: Retrieve details of the authenticated user using a valid JWT token.
  *     security:
  *       - bearerAuth: []
@@ -156,6 +162,43 @@ router.post('/register', register);
  */
 router.get("/auth",verifytoken,getUser);
 
-
+/**
+ * @swagger
+ * /user/setAvatar/{id}:
+ *   put:
+ *     summary: Set user profile avatar.
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User's ID.
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: avatarimage
+ *         required: true
+ *         description: Base64-encoded avatar image.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             avatarimage:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Profile set successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 status:
+ *                   type: boolean
+ *       500:
+ *         description: Internal server error.
+ */
 router.post("/setAvatar/:id",setAvatar)
 module.exports = router 

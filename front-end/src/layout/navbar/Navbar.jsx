@@ -2,9 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import { updateIndex } from "../../slices/NavIndex";
-
-import { updateUser } from "../../slices/User";
-import { setAuthenticated } from "../../slices/isAuthenticated";
 const Navbar = () => {
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },

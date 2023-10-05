@@ -43,6 +43,5 @@ const bookingSchema = new mongoose.Schema({
       enum: ['pending', 'ready for delivery', 'completed'],
       default: 'pending',
     },
-    // Add more fields as needed (e.g., payment information, bike details)
   });
   module.exports = mongoose.model("Booking",bookingSchema)

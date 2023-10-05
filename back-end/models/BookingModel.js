@@ -10,7 +10,9 @@ const mongoose = require('mongoose');
  *           type: string
  *           description: The ID of the customer who made the booking.
  *         service:
- *           type: string
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Service'
  *           description: The ID of the service being booked.
  *         date:
  *           type: string
@@ -24,24 +26,26 @@ const mongoose = require('mongoose');
  *         
  */
 const bookingSchema = new mongoose.Schema({
-    customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Customer',
-      required: true,
-    },
-    service: {
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
+  service: [
+    {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Service',
       required: true,
     },
-    date: {
-      type: Date,
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ['pending', 'ready for delivery', 'completed'],
-      default: 'pending',
-    },
-  });
-  module.exports = mongoose.model("Booking",bookingSchema)
+  ],
+  date: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'ready for delivery', 'completed'],
+    default: 'pending',
+  },
+});
+module.exports = mongoose.model("Booking", bookingSchema)

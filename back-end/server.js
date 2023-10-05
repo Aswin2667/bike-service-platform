@@ -1,15 +1,16 @@
 const express = require('express');
 const User = require('./models/UserModel');
-require('dotenv').config();
+require('dotenv').config({path:'.env.dev'});
 const bcrypt = require("bcrypt");
 const app = express();
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 9090;
 const userRouter = require('./routes/UserRoutes');
-const serviceRouter = require("./routes/ServiceRoutes")
+const serviceRouter = require("./routes/ServiceRoutes");
+const BookingRouter = require("./routes/BookingRoutes")
 const { specs, swaggerUi } = require('./config/swagger'); 
-const url = 'mongodb://localhost:27017/data_base';
+const url = process.env.MONGO_DB_URL;
 const cors = require('cors');
 app.use(cookieParser());
 mongoose.connect(url, { useNewUrlParser: true });
@@ -29,9 +30,9 @@ if(!admin){
   });
 } 
 });
-
 app.use('/user', userRouter);
 app.use("/service",serviceRouter)
+app.use("/booking",BookingRouter)
 const options = {
     customCss: '.swagger-ui .topbar { display: none } ',
     customSiteTitle: "Bike Service"

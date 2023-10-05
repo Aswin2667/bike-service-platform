@@ -66,7 +66,8 @@ const userSchema = new mongoose.Schema({
   avatarimage:{
     type:String,
     default:"",
-  },bookings: [
+  },
+  bookings: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Booking',

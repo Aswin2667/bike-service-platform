@@ -14,8 +14,6 @@ module.exports.addService = async (req, res) => {
     res.status(500).json({ msg: "Error adding service", error: error.message });
   }
 };
-
-
 module.exports.updateService = async (req, res) => {
     try {
       const { name } = req.params;

@@ -1,15 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:200');
-
-html, body {
-  height: 100%;
-}
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background: #1D1F20;
-}
 #box {
   display: flex;
   align-items: center;

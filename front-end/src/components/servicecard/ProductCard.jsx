@@ -1,5 +1,6 @@
 import React from "react";
 const ProductCard = (props) => {
+  
   return (
     <div className="p-5 mt-5 bg-white flex  w-min items-center justify-center rounded-xl">
       <div className="row">

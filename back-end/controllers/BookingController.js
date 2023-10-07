@@ -4,10 +4,14 @@ const User = require("../models/UserModel");
 module.exports.addBooking = async (req, res, next) => {
     try {
         const { customerId, serviceIds, date, status = 'pending' } = req.body;
+        console.log(req.body);
+        if(!date){
+          return res.json({status:false,message:"Date is Required"});
+        }
         const customer = await User.findById(customerId);
     
         if (!customer) {
-          return res.status(404).json({ message: 'Customer not found.' });
+          return res.status(404).json({status:false, message: 'Customer not found.' });
         }
         const savedBooking = await Booking.create({
             customer: customer._id, 
@@ -17,7 +21,7 @@ module.exports.addBooking = async (req, res, next) => {
         });
         customer.bookings.push(savedBooking._id);
         await customer.save();
-        res.status(201).json(savedBooking); 
+        res.status(201).json({status:true,savedBooking}); 
       } catch (error) {
         next(error);
       }

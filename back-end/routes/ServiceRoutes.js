@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 /**
  * @swagger
- * /services/add:
+ * /service/add:
  *   post:
  *     summary: Add a new service
  *     tags: [Services]
@@ -50,7 +50,7 @@ const router = express.Router();
 router.post("/add",addService)
 /**
  * @swagger
- * /services/update/{name}:
+ * /service/update/{name}:
  *   put:
  *     summary: Update price and time to complete for a service by name
  *     tags: [Services]
@@ -110,7 +110,7 @@ router.put("/update/:name",updateService)
 
 /**
  * @swagger
- * /services/delete/{name}:
+ * /service/delete/{name}:
  *   delete:
  *     summary: Delete a service by name
  *     tags: [Services]
@@ -158,7 +158,7 @@ router.put("/update/:name",updateService)
 router.delete("/delete/:name",deleteServiceByName)
 /**
  * @swagger
- * /api/services:
+ * /service/all:
  *   get:
  *     summary: Get a list of all services
  *     tags:

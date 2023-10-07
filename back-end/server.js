@@ -7,9 +7,14 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 9090;
 const userRouter = require('./routes/UserRoutes');
+const bodyParser = require('body-parser')
 const serviceRouter = require("./routes/ServiceRoutes");
 const BookingRouter = require("./routes/BookingRoutes")
 const { specs, swaggerUi } = require('./config/swagger'); 
+const jsonParser = bodyParser.json({limit:1024*1024*10, type:'application/json'}); 
+const urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*10,type:'application/x-www-form-urlencoded' });
+app.use(jsonParser);
+app.use(urlencodedParser);
 const url = process.env.MONGO_DB_URL;
 const cors = require('cors');
 app.use(cookieParser());
@@ -26,13 +31,14 @@ if(!admin){
     username:"root",
     email:"admin@gmail.com",
     password:password,
+    phonenumber:"1234567891",
     role:"ADMIN"
   });
 } 
 });
 app.use('/user', userRouter);
 app.use("/service",serviceRouter)
-app.use("/booking",BookingRouter)
+app.use("/booking",BookingRouter) 
 const options = {
     customCss: '.swagger-ui .topbar { display: none } ',
     customSiteTitle: "Bike Service"

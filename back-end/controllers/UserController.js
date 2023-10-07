@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = "123456789";
 module.exports.register = async (req, res, next) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password,phonenumber } = req.body;
         const usernameCheck = await User.findOne({ username });
         if (usernameCheck) {
             return res.json(
@@ -28,7 +28,8 @@ module.exports.register = async (req, res, next) => {
             {
                 username,
                 email,
-                password: hashPassword
+                password: hashPassword,
+                phonenumber
             }
         );
         delete user.password;

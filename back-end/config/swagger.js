@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.SWAGGER_DOCS_BASE_URL,
+        url: process.env.SWAGGER_DOCS_BASE_URL+process.env.PORT,
       },
     ],
   },

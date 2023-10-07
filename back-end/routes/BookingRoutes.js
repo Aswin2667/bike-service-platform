@@ -4,7 +4,7 @@ const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus} = requi
 
 /**
  * @swagger
- * /add:
+ * /booking/add:
  *   post:
  *     summary: Create a new booking
  *     description: Create a new booking and link it to a customer.
@@ -39,7 +39,7 @@ const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus} = requi
 router.post("/add",addBooking);
 /**
  * @swagger
- * /getall:
+ * /booking/getall:
  *   get:
  *     summary: Get all bookings with customer details
  *     description: Retrieve a list of all bookings with customer and service details.

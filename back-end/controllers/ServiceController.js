@@ -1,12 +1,13 @@
 const ServiceModel = require("../models/ServiceModel.js")
 module.exports.addService = async (req, res) => {
   try {
-    const { name, price, timeToComplete, description } = req.body;
+    const { name, price, timeToComplete,serviceimage  } = req.body;
     const service = await ServiceModel.create({
       name,
       price,
       timeToComplete,
-      description,
+      serviceimage
+
     });
     res.json({ msg: "Service added", service });
   } catch (error) {

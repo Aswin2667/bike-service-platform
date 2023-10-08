@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register ,login, verifytoken,getUser,setAvatar} = require('../controllers/UserController');
+const { register ,login, verifytoken,getUser,setAvatar ,addItemToCart,removeItemFromCart, getAllUser} = require('../controllers/UserController');
 
 /**
  * @swagger
@@ -201,4 +201,7 @@ router.get("/auth",verifytoken,getUser);
  *         description: Internal server error.
  */
 router.post("/setAvatar/:id",setAvatar)
+
+router.get("/all",getAllUser);
+
 module.exports = router 

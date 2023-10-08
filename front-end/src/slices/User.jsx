@@ -8,6 +8,7 @@ const initialState = {
     role: "",
     isAvatarImageSet: false,
     avatarimage: "",
+    bookings:[],
     __v: 0,
   },
 };
@@ -34,6 +35,12 @@ export const User = createSlice({
     updateAvatarImage: (state, action) => {
       state.user.avatarimage = action.payload;
     },
+    addBooking: (state, action) => {
+      state.user.bookings.push(action.payload);
+    },
+    setBookings: (state, action) => {
+      state.user.bookings = action.payload;
+    }
   },
 });
 
@@ -44,6 +51,8 @@ export const {
   updateRole,
   updateAvatarImage,
   updateisAvatarImageSet,
+  addBooking,
+  setBookings,
 } = User.actions;
 
 export default User.reducer;

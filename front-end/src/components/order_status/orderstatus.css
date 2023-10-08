@@ -1,18 +1,8 @@
-.hh-grayBox {
-	background-color: #F8F8F8;
-	margin-bottom: 20px;
-	padding: 40px;
-    width:900px;
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    
-}
+
 .pt45{padding-top:45px;}
 .order-tracking{
 	text-align: center;
-	width: 33.33%;
+	width: 33%;
 	position: relative;
 	display: block;
 }
@@ -23,7 +13,7 @@
 	height: 30px;
 	width: 30px;
 	border: 0px solid #AFAFAF;
-	background-color: #f7be16;
+	background-color: #f73c16;
 	margin: 0 auto;
 	transition: background 0.25s linear;
 	-webkit-transition: background 0.25s linear;
@@ -70,8 +60,8 @@
 	display: block;
 	height: 3px;
 	width: calc(100% - 40px);
-	background-color: #f7be16;
-	top: 13px;
+	background-color: #f73f16;
+	top: 15px;
 	position: absolute;
 	left: calc(-50% + 20px);
 	z-index: 0;

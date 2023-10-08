@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import { updateIndex } from "../../slices/NavIndex";
 const Navbar = () => {
+  const user = useSelector((state)=>state.user.user)
   const Menus = [
     { name: "Home", icon: "home-outline", dis: "-translate-y-5 " },
     { name: "Services", icon: "construct-outline", dis: "translate-y-9 mt-5" },
-    { name: "Chat", icon: "chatbubble-outline", dis: "translate-y-32" },
-    { name: "Bookings", icon: "cart-outline", dis: "translate-y-40 mt-11" },
+    { name: user.role==="ADMIN"?"Chat":"Orders", icon: user.role==="ADMIN"?"chatbubble-outline":"book-outline", dis: "translate-y-32" },
+    { name: user.role==="ADMIN"?"Bookings":"Cart", icon: user.role==="ADMIN"?"book-outline":"cart-outline", dis: "translate-y-40 mt-11" },
     { name: "Profile", icon: "person-outline", dis: "translate-y-64 mt-7" },
   ];
-
   const active = useSelector((state) => state.navindex.value);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (

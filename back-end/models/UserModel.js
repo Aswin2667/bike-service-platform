@@ -76,12 +76,6 @@ const userSchema = new mongoose.Schema({
   phonenumber:{
     type:String,
     required:true 
-  },
-  mycart:[
-    {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'services'
-    },
-  ],
+  }
 });
 module.exports  = mongoose.model('User', userSchema);

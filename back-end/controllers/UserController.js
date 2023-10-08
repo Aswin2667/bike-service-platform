@@ -119,3 +119,12 @@ module.exports.setAvatar = async (req,res,next)=>{
         next(err)
     }
 }
+module.exports.getAllUser = async (req,res,next)=>{
+    try{
+        const userData = await User.find({role:"CLIENT"});
+        return res.json(userData);
+    }catch(err){
+        next(err)
+    }
+}
+

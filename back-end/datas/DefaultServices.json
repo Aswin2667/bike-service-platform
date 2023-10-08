@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "65210776bcd243bbf03ca4b8"
-  },
   "name": "GENERAL SERVICE CHECK-UP",
   "price": 600,
   "timeToComplete": 60,
@@ -9,9 +6,6 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "65210cedbcd243bbf03ca4d8"
-  },
   "name": "OIL CHANGE",
   "price": 450,
   "timeToComplete": 30,
@@ -19,9 +13,6 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "6521124bbcd243bbf03ca4e0"
-  },
   "name": "WATER WASH",
   "price": 350,
   "timeToComplete": 20,

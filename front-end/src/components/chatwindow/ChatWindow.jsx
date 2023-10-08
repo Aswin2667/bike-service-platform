@@ -1,81 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
+import UserService from "../../services/userservice/UserService";
+import ChatService from "../../services/chatservice/ChatService";
 
 const ChatWindow = () => {
-  // Dummy data for messages
-  function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  }
+
   
   // Dummy data for messages
-  const initialMessages = [
-    {
-      text: "Hello, how can I help you?",
-      sender: "admin",
-      receiver: "Bob",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Hi, I have a question.",
-      sender: "admin",
-      receiver: "Alice",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Hello, how can I help you?",
-      sender: "Bob",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Hi, I have a question.",
-      sender: "Alice",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "This is a response from Bob.",
-      sender: "Bob",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Another message from Alice.",
-      sender: "Alice",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Admin's response to Alice.",
-      sender: "admin",
-      receiver: "Alice",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "How can I assist you further?",
-      sender: "admin",
-      receiver: "Bob",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "I have more questions to ask.",
-      sender: "Bob",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "Sure, feel free to ask.",
-      sender: "admin",
-      receiver: "Bob",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-    {
-      text: "What's your favorite color?",
-      sender: "Bob",
-      receiver: "admin",
-      timestamp: randomDate(new Date(2023, 0, 1), new Date(2023, 9, 1)),
-    },
-  ];
-  
+  const [initialMessages,setinitialMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
   
   // Filter messages for Bob and admin
   const bobAdminMessages = initialMessages.filter(
@@ -84,17 +16,30 @@ const ChatWindow = () => {
       (message.sender === "admin" && message.receiver === "Bob")
   );
 
-  // Dummy data for contacts
-  const contacts = [
-    {
-      name: "Alice",
-      avatar: "src/assets/images/1.svg",
-    },
-    {
-      name: "Bob",
-      avatar: "src/assets/images/2.svg",
-    },
-  ];
+  const [contacts, setContacts] = useState([]); // Initialize with an empty array
+const fetchMessagesAndUsers = ()=>{
+  UserService.getAllUser().then((response) => {
+    setContacts(response.data);
+  })
+  .catch((error) => {
+    console.error("Error fetching contacts:", error);
+  });
+  ChatService.getAllMessages().then((res)=>{
+    setinitialMessages(res.data);
+    // console.log(res.data)
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+  // Use useEffect to fetch contacts when the component mounts
+  useEffect(() => {
+    // Make an HTTP GET request to fetch contacts from your server
+    
+      const intervalId = setInterval(fetchMessagesAndUsers, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
 
   // State to track selected contact and its messages
   const [selectedContact, setSelectedContact] = useState(null);
@@ -103,16 +48,44 @@ const ChatWindow = () => {
   // Function to handle contact selection
   const handleContactClick = (contactIndex) => {
     setSelectedContact(contacts[contactIndex]);
-    // Update messages based on the selected contact (Bob or Alice)
-    const selectedName = contacts[contactIndex].name;
+    const selectedName = contacts[contactIndex].username;
+    console.log(selectedName)
     const filteredMessages = initialMessages.filter(
       (message) =>
-        (message.sender === "admin" && message.receiver === selectedName) ||
-        (message.sender === selectedName && message.receiver === "admin")
+        (message.sender === "root" && message.receiver === selectedName) ||
+        (message.sender === selectedName && message.receiver === "root")
     );
     setMessages(filteredMessages);
   };
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() === "") {
+      return; // Do not send empty messages
+    }
 
+    try {
+      // Send the message to the server and save it in the database
+      const response = await ChatService.addMessage({
+        text: inputMessage,
+        sender: "root", // Set the sender as "root"
+        receiver: selectedContact.username, // Use the selected contact as the receiver
+      }).then((res)=>{
+        setMessages([...messages, res.data]);
+        // Clear the input field
+        setInputMessage("");
+      })
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+  // Create a ref for the chat messages container
+  const messagesContainerRef = useRef(null);
+
+  // Use useEffect to scroll to the bottom of the chat messages container when messages change
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
   return (
     <div className="flex h-screen -between bg-gray-900">
       {/* Contacts List */}
@@ -122,7 +95,7 @@ const ChatWindow = () => {
             <div
               key={index}
               className={`mb-4 rounded p-2 hover:bg-purple-400 duration-500 cursor-pointer ${
-                selectedContact && selectedContact.name === contact.name
+                selectedContact && selectedContact.username === contact.username
                   ? "bg-purple-400"
                   : "bg-purple-900"
               }`}
@@ -130,9 +103,9 @@ const ChatWindow = () => {
             >
               <div className="flex items-center space-x-2">
                 <div className="w-16 h-16 rounded-full text-white flex items-center justify-center">
-                  <img className="" src={contact.avatar} alt={contact.name} />
+                  <img className="" src={`data:image/svg+xml;base64,${contact.avatarimage}`} alt={contact.name} />
                 </div>
-                <h1 className="text-3xl text-white">{contact.name}</h1>
+                <h1 className="text-3xl text-white">{contact.username}</h1>
               </div>
             </div>
           ))}
@@ -149,21 +122,21 @@ const ChatWindow = () => {
             <div className="bg-gray-800 flex items-center gap-5 text-white p-4">
               <img
                 className="h-14"
-                src={selectedContact.avatar}
-                alt={selectedContact.name}
+                src={`data:image/svg+xml;base64,${selectedContact.avatarimage}`}
+                alt={selectedContact.username}
               />
-              <h1 className="text-2xl font-semibold">{selectedContact.name}</h1>
+              <h1 className="text-2xl font-semibold">{selectedContact.username}</h1>
             </div>
 
-            <div className="flex-grow p-4 overflow-y-auto">
+            <div className="flex-grow p-4 overflow-y-auto" ref={messagesContainerRef}>
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${
-                    message.sender === "admin" ? "justify-end" : ""
+                    message.sender === "root" ? "justify-end" : ""
                   } mb-4`}
                 >
-                  {message.sender !== "admin" && (
+                  {message.sender !== "root" && (
                     <img
                       className="h-7 m-4"
                       src={selectedContact ? selectedContact.avatar : ""}
@@ -173,7 +146,7 @@ const ChatWindow = () => {
                   <div className="">
                     <div
                       className={`p-3 rounded-lg max-w-xs ${
-                        message.sender === "admin"
+                        message.sender === "root"
                           ? "bg-blue-600 text-white"
                           : "bg-gray-300 text-gray-800"
                       }`}
@@ -181,10 +154,10 @@ const ChatWindow = () => {
                       {message.text}
                     </div>
                     <small className="text-white">
-                      {message.timestamp.toLocaleString()}
+                    {new Date(message.timestamp).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true })}
                     </small>
                   </div>
-                  {message.sender === "admin" && (
+                  {message.sender === "root" && (
                     <img
                       className="h-7 m-4"
                       src={selectedContact ? selectedContact.avatar : ""}
@@ -200,8 +173,10 @@ const ChatWindow = () => {
                   type="text"
                   className=" flex-grow border border-purple-400 text-white text-xl focus:outline-none rounded-l-md border-r-0 p-2 bg-transparent"
                   placeholder="Type your message..."
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
                 />
-                <button className="bg-transparent border border-purple-400 text-white rounded-r-md pl-5 pr-5 border-l-0">
+                <button onClick={handleSendMessage} className="bg-transparent border border-purple-400 text-white rounded-r-md pl-5 pr-5 border-l-0">
                   <div className="flex items-center h-full w-full text-white">
                     <ion-icon name="send"></ion-icon>
                   </div>

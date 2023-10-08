@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus} = require("../controllers/BookingController");
+const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus,getBookingsByIds} = require("../controllers/BookingController");
 
 /**
  * @swagger
@@ -112,4 +112,10 @@ router.get("/getall",getAllBookingsWithCustomerDetails);
  *               message: Internal server error.
  */
 router.put("/:bookingId/status" ,updateBookingStatus)
+
+
+router.get('/getbookingsbyids', getBookingsByIds )
+  
+
+
 module.exports = router

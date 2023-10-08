@@ -32,7 +32,7 @@ export default function SetAvatar() {
       const fetchData = async () => {
         try {
           const data = [];
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 3; i++) {
             const image = await AvatarService.randomAvatar();
             const buffer = new Buffer(image.data);
             data.push(buffer.toString("base64"));

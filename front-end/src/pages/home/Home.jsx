@@ -16,6 +16,7 @@ const Home = () => {
     if (isAuthenticated) {
       UserService.authUser(token).then((res) => {
         dispatch(updateUser(res.data.user));
+        console.log(User)
       });
     } else {
       navigate("/");
@@ -44,7 +45,7 @@ const Home = () => {
             </div>
           </div>
           <div className="relative">
-      {!isChatOpen && (
+      {!isChatOpen && User.role!=="ADMIN" &&(
         <div className="fixed right-6 h-screen z-50 flex items-end text-white p-5">
           <img
             src="src/assets/icons/chat.svg"

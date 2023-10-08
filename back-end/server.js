@@ -1,12 +1,15 @@
 const express = require('express');
 const User = require('./models/UserModel');
+const Service = require('./models/ServiceModel')
 require('dotenv').config({path:'.env.dev'});
+const data = require("./datas/DefaultServices.json")
 const bcrypt = require("bcrypt");
 const app = express();
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 9090;
 const userRouter = require('./routes/UserRoutes');
+const MessageRouter = require("./routes/MessageRoutes");
 const bodyParser = require('body-parser')
 const serviceRouter = require("./routes/ServiceRoutes");
 const BookingRouter = require("./routes/BookingRoutes")
@@ -35,10 +38,16 @@ if(!admin){
     role:"ADMIN"
   });
 } 
+const services = await Service.find();
+if(services.length===0){
+  Service.insertMany(data);
+  console.log("default Services added");
+}
 });
 app.use('/user', userRouter);
 app.use("/service",serviceRouter)
 app.use("/booking",BookingRouter) 
+app.use("/chat",MessageRouter)
 const options = {
     customCss: '.swagger-ui .topbar { display: none } ',
     customSiteTitle: "Bike Service"

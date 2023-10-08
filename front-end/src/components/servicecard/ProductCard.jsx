@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {addToCart} from "../../slices/CartSlice"
+import { addToCart } from "../../slices/CartSlice";
 const ProductCard = (props) => {
   const dispatch = useDispatch();
-
+  const user = useSelector((state)=>state.user.user);
   const handleAddToCart = () => {
     const service = { price: props.price, name: props.name, timeToComplete: props.timeToComplete, serviceimage:props.serviceimage, _id:props._id };
     dispatch(addToCart(service));
@@ -19,7 +19,7 @@ const ProductCard = (props) => {
           <div className="flex flex-col gap-44 items-center justify-center">
             <div className="w-44 h-24">
               <img
-                src={`data:image/jpeg;base64,${props.serviceimage}`}
+                src={`data:image/jpeg;base64,${props.serviceimage}`} 
                 alt="Product"
                 className="rounded-xl"
               />
@@ -30,7 +30,7 @@ const ProductCard = (props) => {
                   {props.name}
                 </span>
               </div>
-              <div className="border-b-4 mb-3">
+              <div className="text-center border-b-4 mb-3">
                 <h3>Time To Complete {props.timeToComplete} mins</h3>
               </div>
               <div className="card-footer">

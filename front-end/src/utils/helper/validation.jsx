@@ -1,7 +1,15 @@
 import { message } from "antd";
 
 export const validateForm = (user) => {
-    const {username, password,confirmPassword,email} = user;
+    const {username, password,confirmPassword,email,phonenumber} = user;
+    if(phonenumber.length!=10){
+      message.error("Enter a valid Mobile Number");
+      return false;
+    }
+    if(password.length<=6){
+      message.error("Password length must greater than or equal to 6");
+      return false;
+    }
     if(password!==confirmPassword){
       message.error("Password doesn't match!");
       return false;

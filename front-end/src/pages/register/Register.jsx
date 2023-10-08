@@ -76,6 +76,7 @@ const Register = () => {
           <input
             type="numeric"
             placeholder="Mobile Number"
+            required
             name="phonenumber"
             onChange={(e) => handleChange(e)}
             className="w-full px-4 py-2 bg-transparent border-4 border-purple-600 rounded-md text-white text-lg mb-4 focus:outline-none focus:border-purple-400"

@@ -29,7 +29,7 @@ Follow these steps to manually set up the Bike Service Application:
 4. Change into the backend directory:
 
    ```
-   cd ../bck-end
+   cd ../back-end
    ```
 
 5. Install backend dependencies:

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UserService from "../../services/userservice/UserService";
 import { updateUser } from "../../slices/User";
 import { useNavigate } from "react-router-dom";
-import ChatBox from "../../ChatBox";
+import ChatBox from "../../components/chatbox/ChatBox";
 const Home = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.Authenticated.value);

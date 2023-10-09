@@ -102,9 +102,9 @@ const fetchMessagesAndUsers = ()=>{
             </div>
           ))}
         </div>
-        <div className="w-full p-4 flex items-center h-24 bg-gray-800 rounded-lg gap-24">
+        <div className="w-full p-4 flex items-center h-24 bg-gray-800 rounded-lg gap-5">
           <img className="h-16" src="src/assets/images/3.svg" />
-          <h1 className="text-3xl text-white">ADMIN</h1>
+          <h1 className="text-3xl text-white w-full text-center">ADMIN</h1>
         </div>
       </div>
 

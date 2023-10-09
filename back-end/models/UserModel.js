@@ -8,31 +8,59 @@ const mongoose = require('mongoose')
  *       properties:
  *         username:
  *           type: string
- *           description: Unique username for the user (3-20 characters).
+ *           description: The username of the user.
+ *           minLength: 3
+ *           maxLength: 20
+ *           example: Aswin2667
  *         email:
  *           type: string
- *           description: Unique email address for the user (up to 50 characters).
+ *           description: The email address of the user.
+ *           format: email
+ *           maxLength: 50
+ *           example: aswin96777@gmail.com
  *         password:
  *           type: string
- *           description: User's password (5-10 characters).
+ *           description: The password of the user.
+ *           minLength: 5
+ *           maxLength: 10
+ *           example: secret123
  *         role:
  *           type: string
- *           enum: ['ADMIN', 'CLIENT']
- *           default: 'CLIENT'
- *           description: User's role, which can be 'ADMIN' or 'CLIENT'.
+ *           description: The role of the user.
+ *           enum:
+ *             - ADMIN
+ *             - CLIENT
+ *           default: CLIENT
+ *           example: CLIENT
  *         isAvatarImageSet:
  *           type: boolean
+ *           description: Indicates if an avatar image is set for the user.
  *           default: false
- *           description: Indicates whether the user has set an avatar image.
- *         avatarimage:
+ *           example: false
+ *         avatarImage:
  *           type: string
- *           default: ''
- *           description: URL or path to the user's avatar image.
+ *           description: The URL or path to the user's avatar image (base64 images only).
+ *           example: werqc3rwxr3x135c.......
  *         bookings:
  *           type: array
- *           items:
- *             $ref: '#/components/schemas/Booking'
  *           description: An array of booking IDs associated with the user.
+ *           items:
+ *             $ref: '#/components/schemas/Booking' # Reference to the Booking schema
+ *         phonenumber:
+ *           type: string
+ *           description: The phone number of the user.
+ *           example: 1234567891
+ *       example:
+ *         username: Aswin2667
+ *         email: aswin96777@gmail.com
+ *         password: secret123
+ *         role: CLIENT
+ *         isAvatarImageSet: false
+ *         avatarImage: werqc3rwxr3x135c.......
+ *         bookings:
+ *           - 5f87c83e9f81052f441097cd
+ *           - 5f87c8419f81052f441097ce
+ *         phonenumber: 1234567891
  */
 const userSchema = new mongoose.Schema({
   username:{

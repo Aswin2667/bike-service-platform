@@ -1,6 +1,6 @@
 import React, { useState, useEffect ,useRef} from "react";
 import { useSelector } from "react-redux"; // Import useSelector from react-redux
-import ChatService from "./services/chatservice/ChatService";
+import ChatService from "../../services/chatservice/ChatService";
 
 const ChatBox = ({ isOpen, toggleChat }) => {
   const [inputMessage, setInputMessage] = useState("");

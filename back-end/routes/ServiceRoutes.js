@@ -2,12 +2,16 @@ const { addService,updateService,deleteServiceByName, getAllService } = require(
 
 const express = require('express');
 const router = express.Router();
+
+
 /**
  * @swagger
  * /service/add:
  *   post:
  *     summary: Add a new service
- *     tags: [Services]
+ *     description: Add a new service with the given name, price, time to complete, and service image.
+ *     tags:
+ *       - Services
  *     requestBody:
  *       required: true
  *       content:
@@ -21,11 +25,15 @@ const router = express.Router();
  *                 type: number
  *               timeToComplete:
  *                 type: number
- *               description:
+ *               serviceimage:
  *                 type: string
+ *             required:
+ *               - name
+ *               - price
+ *               - timeToComplete
  *     responses:
  *       '200':
- *         description: Service added successfully
+ *         description: Service added successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -33,32 +41,26 @@ const router = express.Router();
  *               properties:
  *                 msg:
  *                   type: string
+ *                   example: Service added
  *                 service:
  *                   $ref: '#/components/schemas/Service'
  *       '500':
- *         description: Error adding service
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                 error:
- *                   type: string
+ *         description: Internal server error.
  */
 router.post("/add",addService)
 /**
  * @swagger
- * /service/update/{name}:
+ * /service/{_id}:
  *   put:
- *     summary: Update price and time to complete for a service by name
- *     tags: [Services]
+ *     summary: Update a service by ID
+ *     description: Update the price, time to complete, and name of a service by its ID.
+ *     tags:
+ *       - Services
  *     parameters:
- *       - in: path
- *         name: name
+ *       - name: _id
+ *         in: path
+ *         description: ID of the service to update.
  *         required: true
- *         description: Name of the service to update
  *         schema:
  *           type: string
  *     requestBody:
@@ -68,13 +70,19 @@ router.post("/add",addService)
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
  *               price:
  *                 type: number
  *               timeToComplete:
  *                 type: number
+ *             required:
+ *               - name
+ *               - price
+ *               - timeToComplete
  *     responses:
  *       '200':
- *         description: Service updated successfully
+ *         description: Service updated successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -82,48 +90,34 @@ router.post("/add",addService)
  *               properties:
  *                 msg:
  *                   type: string
+ *                   example: Service updated
  *                 updatedService:
  *                   $ref: '#/components/schemas/Service'
  *       '404':
- *         description: Service not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
+ *         description: Service not found.
  *       '500':
- *         description: Error updating service
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                 error:
- *                   type: string
+ *         description: Internal server error.
  */
 router.put("/update/:_id",updateService)
 
-
 /**
  * @swagger
- * /service/delete/{name}:
+ * /service/{_id}:
  *   delete:
- *     summary: Delete a service by name
- *     tags: [Services]
+ *     summary: Delete a service by ID
+ *     description: Delete a service by its ID.
+ *     tags:
+ *       - Services
  *     parameters:
- *       - in: path
- *         name: name
+ *       - name: _id
+ *         in: path
+ *         description: ID of the service to delete.
  *         required: true
- *         description: Name of the service to delete
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: Service deleted successfully
+ *         description: Service deleted successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -131,41 +125,26 @@ router.put("/update/:_id",updateService)
  *               properties:
  *                 msg:
  *                   type: string
+ *                   example: Service deleted
  *                 deletedService:
  *                   $ref: '#/components/schemas/Service'
  *       '404':
- *         description: Service not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
+ *         description: Service not found.
  *       '500':
- *         description: Error deleting service
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                 error:
- *                   type: string
+ *         description: Internal server error.
  */
-
 router.delete("/delete/:_id",deleteServiceByName)
 /**
  * @swagger
- * /service/all:
+ * /services:
  *   get:
- *     summary: Get a list of all services
+ *     summary: Get all services
+ *     description: Retrieve a list of all services.
  *     tags:
  *       - Services
  *     responses:
  *       '200':
- *         description: A list of all services
+ *         description: List of services retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -173,16 +152,7 @@ router.delete("/delete/:_id",deleteServiceByName)
  *               items:
  *                 $ref: '#/components/schemas/Service'
  *       '500':
- *         description: Error retrieving services
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                 error:
- *                   type: string
+ *         description: Internal server error.
  */
 router.get("/all",getAllService)
 module.exports = router

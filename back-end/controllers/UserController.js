@@ -1,10 +1,11 @@
 const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { sendEmail } = require('../helpers/Mail');
 const JWT_SECRET_KEY = "123456789";
 module.exports.register = async (req, res, next) => {
     try {
-        const { username, email, password,phonenumber } = req.body;
+        const { username, email, password, phonenumber } = req.body;
         const usernameCheck = await User.findOne({ username });
         if (usernameCheck) {
             return res.json(
@@ -33,6 +34,17 @@ module.exports.register = async (req, res, next) => {
             }
         );
         delete user.password;
+        const emailSubject = 'Registration Confirmation for Bike Care';
+        const emailText = `Thank you for registering on our website, ${username}!\n\nWe have added you to our Bike Care program.\n\nPlease do not reply to this email; it is an automated message.`;
+        const emailHtml = `<p>Dear ${username},</p><p>Thank you for registering on our website!</p><p>We have added you to our Bike Care program.</p><p>Please do not reply to this email; it is an automated message.</p>`;
+
+        sendEmail(email, emailSubject, emailText, emailHtml, (error, response) => {
+            if (error) {
+                console.error('Error sending registration email:', error);
+            } else {
+                console.log('Registration email sent successfully to :', username);
+            }
+        });
         return res.json({ status: true, user });
     } catch (error) {
         next(error)
@@ -71,54 +83,54 @@ module.exports.login = async (req, res, next) => {
 }
 module.exports.verifytoken = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
-    if(!token){
-       return res.status(404).json({message:"No token found"});
+    if (!token) {
+        return res.status(404).json({ message: "No token found" });
     }
-    jwt.verify(String(token),JWT_SECRET_KEY,(err,user)=>{
-        if(err){
-             res.status(400).json({message:" Token Expired"});
+    jwt.verify(String(token), JWT_SECRET_KEY, (err, user) => {
+        if (err) {
+            res.status(400).json({ message: " Token Expired" });
         }
         req.id = user.id;
-        });
-      next();
+    });
+    next();
 }
 module.exports.getUser = async (req, res, next) => {
-  const userID = req.id;
-  let user;
-  try {
-     user = await User.findById(userID,"-password");
-  } catch (error) {
-    return new Error(error); 
-  } 
-  if(!user){
-    return res.status(404).json({message:"User Not Found"});
-  }
-  return res.status(200).json({user});
-} 
-module.exports.setAvatar = async (req,res,next)=>{
-    try{
+    const userID = req.id;
+    let user;
+    try {
+        user = await User.findById(userID, "-password");
+    } catch (error) {
+        return new Error(error);
+    }
+    if (!user) {
+        return res.status(404).json({ message: "User Not Found" });
+    }
+    return res.status(200).json({ user });
+}
+module.exports.setAvatar = async (req, res, next) => {
+    try {
         const userId = req.params.id;
         const avatarimage = req.body.avatarimage;
         const userData = await User.findByIdAndUpdate(
             userId,
             {
-                isAvatarImageSet:true,
+                isAvatarImageSet: true,
                 avatarimage
             }
         );
         return res.json({
-            msg:"Profile Set Successfully",
-            status:true
+            msg: "Profile Set Successfully",
+            status: true
         })
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 }
-module.exports.getAllUser = async (req,res,next)=>{
-    try{
-        const userData = await User.find({role:"CLIENT"});
+module.exports.getAllUser = async (req, res, next) => {
+    try {
+        const userData = await User.find({ role: "CLIENT" });
         return res.json(userData);
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 }

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 /**
  * @swagger
  * components:
@@ -7,29 +6,35 @@ const mongoose = require("mongoose");
  *     Message:
  *       type: object
  *       properties:
- *         message:
- *           type: object
- *           properties:
- *             text:
- *               type: string
- *               description: The text of the message.
- *               example: Hello, how are you?
- *           required:
- *             - text
- *         users:
- *           type: array
- *           items:
- *             type: string
- *           description: An array of user IDs associated with the message.
  *         sender:
  *           type: string
- *           format: uuid
- *           description: The user ID of the sender.
- *           example: 5f4d8c96c11d2922f8263e25
+ *           description: The sender of the message.
+ *           example: Aswin2667
+ *         receiver:
+ *           type: string
+ *           description: The receiver of the message.
+ *           example: Admin
+ *         text:
+ *           type: string
+ *           description: The text content of the message.
+ *           example: Hello, how are you?
+ *         timestamp:
+ *           type: string
+ *           format: date-time
+ *           description: The timestamp when the message was sent.
+ *           example: '2023-10-15T14:30:00Z'
  *       required:
- *         - message
  *         - sender
+ *         - receiver
+ *         - text
+ *       example:
+ *         sender: Admin
+ *         receiver: Aswin2667
+ *         text: Hello, how are you?
+ *         timestamp: '2023-10-15T14:30:00Z'
+ *       additionalProperties: false
  */
+
 const MessageSchema = new mongoose.Schema({
   sender: {
     type: String, // You can change the type to match your user schema

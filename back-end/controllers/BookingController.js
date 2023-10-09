@@ -1,5 +1,6 @@
 const Booking = require("../models/BookingModel");
 const User = require("../models/UserModel");
+const {sendEmail} = require("../helpers/Mail")
 const mongoose = require("mongoose")
 module.exports.addBooking = async (req, res, next) => {
   try {
@@ -20,6 +21,16 @@ module.exports.addBooking = async (req, res, next) => {
     });
     customer.bookings.push(savedBooking._id);
     await customer.save();
+    const emailSubject = 'Booking Confirmation';
+    const emailText = `Dear Customer,\n\nYour bike service booking (Booking ID: ${savedBooking._id}) has been confirmed for the following details:\n\nDate and Time: ${new Date(date)}\n\nThank you for choosing our bike service.\n\nBest regards,\n[Bike Care pvt ]\n[bikecare.no.replay@gmail.com]`;
+    const emailHtml = `<p>Dear Customer,</p><p>Your bike service booking (Booking ID: ${savedBooking._id}) has been confirmed for the following details:</p><p><strong>Date and Time:</strong> ${new Date(date).toString()}</p><p>Thank you for choosing our bike service.</p><p>Best regards,<br>[Bike Care pvt ]<br>[bikecare.no.replay@gmail.com]</p>`;
+    sendEmail(customer.email , emailSubject, emailText, emailHtml, (error, response) => {
+      if (error) {
+        console.error('Error sending completion email:', error);
+      } else {
+        console.log('Completion email sent successfully:', response);
+      }
+    });
     res.status(201).json({ status: true, savedBooking });
   } catch (error) {
     next(error);
@@ -57,6 +68,27 @@ module.exports.updateBookingStatus = async (req, res, next) => {
     if (!updatedBooking) {
       return res.status(404).json({ message: 'Booking not found.' });
     }
+
+    if (status === 'completed') {
+      const user = await User.findById(updatedBooking.customer);
+      const customerName = user.username;
+      const customerEmail = user.email;
+      const bookingID = updatedBooking._id; 
+      const dateAndTime = updatedBooking.date;  
+
+      const emailSubject = 'Bike Service Booking Completed';
+      const emailText = `Dear ${customerName},\n\nWe are pleased to inform you that your bike service booking (Booking ID: ${bookingID}) has been successfully completed. Our team has worked diligently to ensure that your bike is in top condition.\n\nBooking Details:\n- Booking ID: ${bookingID}\n- Date and Time: ${dateAndTime}\n\nIf you have any questions or need further assistance, please don't hesitate to contact us.\n\nThank you for choosing our bike service.\n\nBest regards,\n[Bike Care]\n[bikecare.no.replay.@gmail.com]`;
+      const emailHtml = `<p>Dear ${customerName},</p><p>We are pleased to inform you that your bike service booking (Booking ID: ${bookingID}) has been successfully completed. Our team has worked diligently to ensure that your bike is in top condition.</p><p><strong>Booking Details:</strong></p><ul><li>Booking ID: ${bookingID}</li><li>Date and Time: ${dateAndTime}</li></ul><p>If you have any questions or need further assistance, please don't hesitate to contact us.</p><p>Thank you for choosing our bike service.</p><p>Best regards,<br>[Bike Care]<br>[bikecare.no.replay.@gmail.com]</p>`;
+
+      sendEmail(customerEmail, emailSubject, emailText, emailHtml, (error, response) => {
+        if (error) {
+          console.error('Error sending completion email:', error);
+        } else {
+          console.log('Completion email sent successfully:', response);
+        }
+      });
+    }
+
     res.json(updatedBooking);
   } catch (error) {
     next(error);

@@ -7,24 +7,46 @@ const mongoose = require('mongoose');
  *       type: object
  *       properties:
  *         customer:
- *           type: string
- *           description: The ID of the customer who made the booking.
- *         service:
+ *           $ref: '#/components/schemas/User' # Reference to the User schema
+ *           description: an id of The user who made the booking.
+ *         services:
  *           type: array
  *           items:
- *             $ref: '#/components/schemas/Service'
- *           description: The ID of the service being booked.
+ *             $ref: '#/components/schemas/Service' # Reference to the Service schema
+ *           description: An array of service IDs included in the booking.
  *         date:
  *           type: string
  *           format: date-time
- *           description: The date and time when the booking was made.
+ *           description: The date and time of the booking.
+ *           example: '2023-10-15T10:00:00Z'
  *         status:
  *           type: string
- *           enum: ['pending', 'ready for delivery', 'completed']
- *           default: 'pending'
- *           description: The status of the booking, which can be 'pending', 'ready for delivery', or 'completed'.
- *         
+ *           description: The status of the booking.
+ *           enum:
+ *             - pending
+ *             - ready for delivery
+ *             - completed
+ *           default: pending
+ *           example: completed
+ *       required:
+ *         - customer
+ *         - services
+ *         - date
+ *         - status
+ *       example:
+ *         customer:
+ *           username: Aswin2667
+ *           email: aswin96777@gmail.com
+ *           role: CLIENT
+ *         services:
+ *           - 5f87c8419f81052f441097ce
+ *           - 5f87c8439f81052f441097cf
+ *         date: '2023-10-15T10:00:00Z'
+ *         status: completed
+ *       additionalProperties: false
  */
+
+
 const bookingSchema = new mongoose.Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,

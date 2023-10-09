@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { register ,login, verifytoken,getUser,setAvatar ,addItemToCart,removeItemFromCart, getAllUser} = require('../controllers/UserController');
 
+
+
 /**
  * @swagger
  * /user/login:
  *   post:
- *     summary: User login.
+ *     summary: User login
+ *     description: Logs in a user with their username and password.
  *     tags:
  *       - User
- *     description: Authenticate a user with username and password.
  *     requestBody:
+ *       description: User login credentials
  *       required: true
  *       content:
  *         application/json:
@@ -19,11 +22,18 @@ const { register ,login, verifytoken,getUser,setAvatar ,addItemToCart,removeItem
  *             properties:
  *               username:
  *                 type: string
+ *                 description: The username of the user.
+ *                 example: Aswin2667
  *               password:
  *                 type: string
+ *                 description: The password of the user.
+ *                 example: secret123
+ *             required:
+ *               - username
+ *               - password
  *     responses:
- *       200:
- *         description: User successfully logged in.
+ *       '200':
+ *         description: Successfully logged in.
  *         content:
  *           application/json:
  *             schema:
@@ -31,12 +41,14 @@ const { register ,login, verifytoken,getUser,setAvatar ,addItemToCart,removeItem
  *               properties:
  *                 status:
  *                   type: boolean
- *                   description: Indicates if the login was successful.
+ *                   example: true
+ *                   description: Indicates the status of the request (true for success).
  *                 token:
  *                   type: string
- *                   description: JWT token for authenticated user.
- *       400:
- *         description: Bad request - Missing or invalid parameters.
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *                   description: A JSON Web Token (JWT) for authenticated user access.
+ *       '401':
+ *         description: Unauthorized. Incorrect username or password.
  *         content:
  *           application/json:
  *             schema:
@@ -44,32 +56,27 @@ const { register ,login, verifytoken,getUser,setAvatar ,addItemToCart,removeItem
  *               properties:
  *                 msg:
  *                   type: string
- *                   description: Error message.
+ *                   example: Incorrect Username or Password
+ *                   description: A message indicating the reason for unauthorized access.
  *                 status:
  *                   type: boolean
- *                   description: Indicates login failure.
- *       500:
+ *                   example: false
+ *                   description: Indicates the status of the request (false for failure).
+ *       '500':
  *         description: Internal server error.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: Internal server error message.
  */
-router.post('/login',login);
 
+router.post('/login',login);
 /**
  * @swagger
  * /user/register:
  *   post:
- *     summary: Register a new user.
+ *     summary: Register a new user
+ *     description: Registers a new user on the website.
  *     tags:
  *       - User
- *     description: Create a new user account with a unique username and email.
  *     requestBody:
+ *       description: User registration information
  *       required: true
  *       content:
  *         application/json:
@@ -78,16 +85,34 @@ router.post('/login',login);
  *             properties:
  *               username:
  *                 type: string
- *                 description: Unique username for the new user (3-20 characters).
+ *                 description: The username of the user.
+ *                 minLength: 3
+ *                 maxLength: 20
+ *                 example: Aswin2667
  *               email:
  *                 type: string
- *                 description: Unique email address for the new user (up to 50 characters).
+ *                 description: The email address of the user.
+ *                 format: email
+ *                 maxLength: 50
+ *                 example: aswin96777@gmail.com
  *               password:
  *                 type: string
- *                 description: User's password (5-10 characters).
+ *                 description: The password of the user.
+ *                 minLength: 5
+ *                 maxLength: 10
+ *                 example: secret123
+ *               phonenumber:
+ *                 type: string
+ *                 description: The phone number of the user.
+ *                 example: 1234567891
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *               - phonenumber
  *     responses:
- *       200:
- *         description: User successfully registered.
+ *       '200':
+ *         description: Successfully registered a new user.
  *         content:
  *           application/json:
  *             schema:
@@ -95,10 +120,12 @@ router.post('/login',login);
  *               properties:
  *                 status:
  *                   type: boolean
- *                   description: Indicates if the registration was successful.
- *                 
- *       400:
- *         description: Bad request - User already exists (username or email).
+ *                   example: true
+ *                   description: Indicates the status of the request (true for success).
+ *                 user:
+ *                   $ref: '#/components/schemas/User' # Reference to the User schema
+ *       '400':
+ *         description: Bad request. Username or email already exists.
  *         content:
  *           application/json:
  *             schema:
@@ -106,41 +133,43 @@ router.post('/login',login);
  *               properties:
  *                 msg:
  *                   type: string
- *                   description: Error message.
+ *                   example: Username already exists
+ *                   description: A message indicating the reason for the bad request.
  *                 status:
  *                   type: boolean
- *                   description: Indicates registration failure.
- *       500:
+ *                   example: false
+ *                   description: Indicates the status of the request (false for failure).
+ *       '500':
  *         description: Internal server error.
+ */
+
+router.post('/register', register);
+
+
+
+
+/**
+ * @swagger
+ * /user/auth:
+ *   get:
+ *     summary: Get authenticated user details
+ *     description: Retrieve authenticated user details using a valid JWT token.
+ *     tags:
+ *       - Authentication
+ *     security:
+ *       - BearerAuth: [] # Use JWT token for authentication
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved authenticated user details.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 error:
- *                   type: string
- *                   description: Internal server error message.
- */
-router.post('/register', register);
-/**
- * @swagger
- * /user/auth:
- *   get:
- *     summary: Get authenticated user details.
- *     tags:
- *       - User
- *     description: Retrieve details of the authenticated user using a valid JWT token.
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: User details retrieved successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: Bad request - Invalid or expired token.
+ *                 user:
+ *                   $ref: '#/components/schemas/User' # Reference to the User schema
+ *       '401':
+ *         description: Unauthorized. Invalid or expired JWT token.
  *         content:
  *           application/json:
  *             schema:
@@ -148,8 +177,8 @@ router.post('/register', register);
  *               properties:
  *                 message:
  *                   type: string
- *                   description: Error message.
- *       404:
+ *                   example: Token Expired
+ *       '404':
  *         description: User not found.
  *         content:
  *           application/json:
@@ -158,36 +187,40 @@ router.post('/register', register);
  *               properties:
  *                 message:
  *                   type: string
- *                   description: Error message.
+ *                   example: User Not Found
+ *       '500':
+ *         description: Internal server error.
  */
 router.get("/auth",verifytoken,getUser);
 
 /**
  * @swagger
- * /user/setAvatar/{id}:
+ * /user/setAvatar/:id:
  *   put:
- *     summary: Set user profile avatar.
+ *     summary: Set user avatar image
+ *     description: Set the avatar image for a user.
  *     tags:
  *       - User
  *     parameters:
- *       - in: path
- *         name: id
+ *       - name: id
+ *         in: path
+ *         description: User ID
  *         required: true
- *         description: User's ID.
  *         schema:
  *           type: string
- *       - in: body
- *         name: avatarimage
+ *       - name: avatarimage
+ *         in: body
+ *         description: Avatar image data (base64 or URL)
  *         required: true
- *         description: Base64-encoded avatar image.
  *         schema:
  *           type: object
  *           properties:
  *             avatarimage:
  *               type: string
+ *               description: Avatar image data (base64 or URL)
  *     responses:
- *       200:
- *         description: Profile set successfully.
+ *       '200':
+ *         description: Avatar image set successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -195,12 +228,45 @@ router.get("/auth",verifytoken,getUser);
  *               properties:
  *                 msg:
  *                   type: string
+ *                   example: Profile Set Successfully
  *                 status:
  *                   type: boolean
- *       500:
+ *                   example: true
+ *       '404':
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User Not Found
+ *       '500':
  *         description: Internal server error.
  */
+
 router.post("/setAvatar/:id",setAvatar)
+/**
+ * @swagger
+ * /user/all:
+ *   get:
+ *     summary: Get all client users
+ *     description: Retrieve a list of all client users.
+ *     tags:
+ *       - User
+ *     responses:
+ *       '200':
+ *         description: List of client users retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       '500':
+ *         description: Internal server error.
+ */
 
 router.get("/all",getAllUser);
 

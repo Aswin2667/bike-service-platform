@@ -105,7 +105,7 @@ router.post("/add",addService)
  *                 error:
  *                   type: string
  */
-router.put("/update/:name",updateService)
+router.put("/update/:_id",updateService)
 
 
 /**
@@ -155,7 +155,7 @@ router.put("/update/:name",updateService)
  *                   type: string
  */
 
-router.delete("/delete/:name",deleteServiceByName)
+router.delete("/delete/:_id",deleteServiceByName)
 /**
  * @swagger
  * /service/all:

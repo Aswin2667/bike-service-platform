@@ -10,12 +10,6 @@ const ChatWindow = () => {
   const [inputMessage, setInputMessage] = useState("");
   
   // Filter messages for Bob and admin
-  const bobAdminMessages = initialMessages.filter(
-    (message) =>
-      (message.sender === "Bob" && message.receiver === "admin") ||
-      (message.sender === "admin" && message.receiver === "Bob")
-  );
-
   const [contacts, setContacts] = useState([]); // Initialize with an empty array
 const fetchMessagesAndUsers = ()=>{
   UserService.getAllUser().then((response) => {
@@ -26,7 +20,6 @@ const fetchMessagesAndUsers = ()=>{
   });
   ChatService.getAllMessages().then((res)=>{
     setinitialMessages(res.data);
-    // console.log(res.data)
   }).catch((err)=>{
     console.log(err);
   })
@@ -43,13 +36,12 @@ const fetchMessagesAndUsers = ()=>{
 
   // State to track selected contact and its messages
   const [selectedContact, setSelectedContact] = useState(null);
-  const [messages, setMessages] = useState(bobAdminMessages);
+  const [messages, setMessages] = useState([]);
 
   // Function to handle contact selection
   const handleContactClick = (contactIndex) => {
     setSelectedContact(contacts[contactIndex]);
     const selectedName = contacts[contactIndex].username;
-    console.log(selectedName)
     const filteredMessages = initialMessages.filter(
       (message) =>
         (message.sender === "root" && message.receiver === selectedName) ||
@@ -127,7 +119,6 @@ const fetchMessagesAndUsers = ()=>{
               />
               <h1 className="text-2xl font-semibold">{selectedContact.username}</h1>
             </div>
-
             <div className="flex-grow p-4 overflow-y-auto" ref={messagesContainerRef}>
               {messages.map((message, index) => (
                 <div

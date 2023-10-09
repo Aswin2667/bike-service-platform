@@ -17,11 +17,13 @@ module.exports.addService = async (req, res) => {
 };
 module.exports.updateService = async (req, res) => {
     try {
-      const { name } = req.params;
-      const { price, timeToComplete } = req.body;
+      const {_id} = req.params;
+      const Service = req.body;
       const updatedService = await ServiceModel.findOneAndUpdate(
-         name ,
-        { price, timeToComplete },
+        {_id} ,
+        { price:Service.price , 
+          timeToComplete:Service.timeToComplete , 
+          name:Service.name },
         { new: true }
       );
       if (!updatedService) {
@@ -37,8 +39,8 @@ module.exports.updateService = async (req, res) => {
 
 module.exports.deleteServiceByName = async (req, res) => {
     try {
-      const { name } = req.params;
-      const deletedService = await ServiceModel.findOneAndDelete({ name });
+      const { _id } = req.params;
+      const deletedService = await ServiceModel.findOneAndDelete({ _id });
       if (!deletedService) {
         return res.status(404).json({ msg: "Service not found" });
       }

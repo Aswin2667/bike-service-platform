@@ -18,7 +18,7 @@ const OrderTracker = ({ status }) => {
 
   return (
     <>
-      <div className="bg-purple opacity-80 rounded-2xl">
+      <div className="bg-purple opacity-80 w-max rounded-2xl">
         <div className="flex items-center w-full">
           <div className={`order-tracking completed`}>
             <span className="is-complete"></span>

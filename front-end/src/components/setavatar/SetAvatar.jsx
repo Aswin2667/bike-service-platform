@@ -39,7 +39,6 @@ export default function SetAvatar() {
           }
           setAvatars(data);
           setIsLoading(false);
-          // console.log(User);
         } catch (error) {
           console.error("Error fetching data:", error);
         }

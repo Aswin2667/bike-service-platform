@@ -16,7 +16,6 @@ const Home = () => {
     if (isAuthenticated) {
       UserService.authUser(token).then((res) => {
         dispatch(updateUser(res.data.user));
-        console.log(User)
       });
     } else {
       navigate("/");

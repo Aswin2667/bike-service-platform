@@ -6,6 +6,9 @@ class ChatService {
   addMessage(message){
     return axios.post(`${import.meta.env.VITE_USER_API_BASE_URL}/chat/add`,message);
   }
-  getMessages()
+  getMessages(sender,receiver){
+    return axios.get(`${import.meta.env.VITE_USER_API_BASE_URL}/chat/?sender=${sender}&&receiver=${receiver}`);
+  }
 }
 export default new ChatService();
+// http://localhost:9090/chat/?sender=Aswin2667&receiver=Admin

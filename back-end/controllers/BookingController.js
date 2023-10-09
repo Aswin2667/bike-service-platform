@@ -1,10 +1,9 @@
 const Booking = require("../models/BookingModel");
 const User = require("../models/UserModel");
-
+const mongoose = require("mongoose")
 module.exports.addBooking = async (req, res, next) => {
   try {
     const { customerId, serviceIds, date, status = 'pending' } = req.body;
-    console.log(req.body);
     if (!date) {
       return res.json({ status: false, message: "Date is Required" });
     }
@@ -21,7 +20,6 @@ module.exports.addBooking = async (req, res, next) => {
     });
     customer.bookings.push(savedBooking._id);
     await customer.save();
-    console.log(savedBooking);
     res.status(201).json({ status: true, savedBooking });
   } catch (error) {
     next(error);
@@ -66,13 +64,13 @@ module.exports.updateBookingStatus = async (req, res, next) => {
 }
 
 module.exports.getBookingsByIds = async (req, res) => {
-  const { bookingIds } = req.query; // Retrieve bookingIds from query parameters 
+  const { bookingIds } = req.query; // Retrieve bookingIds from query parameters
   if (bookingIds === "") {
     return res.json({ status: false, message: "No booking found" });
   }
   try {
-    // Split the query parameter into an array of booking IDs
-    // const bookingIdsArray = bookingIds.split("&bookingIds=");
+
+
     const bookings = await Booking.find({ _id: { $in: bookingIds } })
       .populate({
         path: 'customer', // Assuming 'customer' is a reference to the User model
@@ -94,4 +92,56 @@ module.exports.getBookingsByIds = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
+};
+
+
+module.exports.getBookingByUserId = async (req, res) => {
+  const { userId } = req.query;
+  try {
+    if (!userId) {
+      return res.status(400).json({ error: 'userId is required.' });
+    }
+
+    // Assuming you have a User model with a field 'userId'
+    const bookings = await Booking.find({ customer: userId }).populate(
+      {
+        path: 'service',
+        select: 'name',
+        model: 'Service'
+      }
+    )
+
+    // You can perform any additional processing or filtering here
+
+    return res.status(200).json({ status: true, bookings });
+  } catch (error) {
+    console.error('Error fetching bookings by user ID:', error);
+    return res.status(500).json({ error: 'Error fetching bookings.' });
+  }
+};
+
+
+
+module.exports.deleteBookingById = async (req, res) => {
+  const { bookingIds } = req.query; // Retrieve bookingIds from query parameters
+  if (bookingIds === "") {
+    return res.json({ status: false, message: "No booking found" });
+  }
+  try {
+    // Delete the bookings by their IDs
+    const objectIds = Array.isArray(bookingIds)
+    ? bookingIds.map(id => new mongoose.Types.ObjectId(id))
+    : [new mongoose.Types.ObjectId(bookingIds)];
+    
+    await User.updateMany(
+      { bookings: { $in: objectIds } },
+      { $pull: { bookings: { $in: objectIds } } }
+    );
+    await Booking.deleteMany({ _id: { $in: objectIds } });
+    res.json({ status: true, message: 'Bookings deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+
 };

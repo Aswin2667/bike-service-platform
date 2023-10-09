@@ -10,7 +10,7 @@ const MyBookings = () => {
   const dispatch = useDispatch();
 
   const fetchBookings = () => {
-    BookingService.getBookingByids(user.bookings)
+    BookingService.getBookingByUserId(user._id)
       .then((data) => {
        if(data.data.status){
           setbookings(data.data.bookings);
@@ -22,14 +22,7 @@ const MyBookings = () => {
   };
 
   useEffect(() => {
-    // Fetch the bookings initially
     fetchBookings();
-
-    // Set up an interval to fetch the bookings every 10 seconds
-    const intervalId = setInterval(fetchBookings, 1000);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(intervalId);
   }, [bookings]);
 
   return (
@@ -75,7 +68,7 @@ const MyBookings = () => {
                     <td className="px-6 py-4">
                       {new Date(item.date).toLocaleString()}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 ">
                       {/* <div
                         className={`flex items-center ${
                           item.status === "pending"

@@ -5,6 +5,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import CartProductcard from "../../components/cartproductcard/CartProductcard";
 import BookingService from "../../services/bookingservice/BookingService";
+import { setCart } from "../../slices/CartSlice";
 const Bookings = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [totalprice, setTotalprice] = useState(0);
@@ -37,13 +38,13 @@ const Bookings = () => {
           return;
         }
         message.success("Booking Confirmed");
+        dispatch(setCart([]));
       });
     } catch (err) {
       message.error("Error while Confirm Booking");
       console.log(err);
     }
   };
-
   return (
     <div className="flex gap-10 h-screen w-screen">
       <Navbar />

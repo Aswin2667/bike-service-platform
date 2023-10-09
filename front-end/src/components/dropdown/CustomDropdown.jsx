@@ -2,8 +2,6 @@ import React from "react";
 import Select from "react-select";
 
 const CustomDropdown = ({ options, value, onChange }) => {
-    console.log("CustomDropdown - value:", value);
-    console.log("CustomDropdown - options:", options);
   return (
     <Select
       options={options}

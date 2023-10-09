@@ -33,12 +33,10 @@ module.exports.register = async (req, res, next) => {
             }
         );
         delete user.password;
-        console.log("New User Registerd : " + user.username);
         return res.json({ status: true, user });
     } catch (error) {
         next(error)
     }
-    console.log(req.body);
 }
 
 module.exports.login = async (req, res, next) => {
@@ -63,15 +61,13 @@ module.exports.login = async (req, res, next) => {
             )
         }
         const token = jwt.sign({ id: user._id }, JWT_SECRET_KEY, {
-            expiresIn: "1hr"
+            expiresIn: "2hr"
         });
         delete user.password;
-        console.log("User logged in : " + user.username);
         return res.json({ status: true, token });
     } catch (error) {
         next(error)
     }
-    console.log(req.body);
 }
 module.exports.verifytoken = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1];
@@ -80,7 +76,6 @@ module.exports.verifytoken = (req, res, next) => {
     }
     jwt.verify(String(token),JWT_SECRET_KEY,(err,user)=>{
         if(err){
-            console.log(token);
              res.status(400).json({message:" Token Expired"});
         }
         req.id = user.id;

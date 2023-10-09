@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../layout/navbar/Navbar";
 import CustomDropdown from "../../components/dropdown/CustomDropdown";
 import BookingService from "../../services/bookingservice/BookingService";
+import { message } from "antd";
 
 const AllBookings = () => {
   const [data, setData] = useState(undefined);
@@ -27,15 +28,23 @@ const AllBookings = () => {
     }
   };
 
-  const handleDropdownAction = () => {
+  const DeleteBooking = () => {
     // Remove selected bookings from the data array
-    const updatedData = data.filter(
-      (booking) => !selectedBookings.includes(booking._id)
-    );
+      BookingService.deleteBookingByIds(selectedBookings).then((res)=>{
+        if(res.data.status){
+          const updatedData = data.filter(
+            (booking) => !selectedBookings.includes(booking._id)
+          );
+          setData(updatedData);
+          message.success(res.data.message)
 
-    setData(updatedData);
-    // Clear the selected bookings
-    setSelectedBookings([]);
+          setSelectedBookings([]);
+        }else{
+          message.error(res.data.message)
+        }
+      })
+
+    
   };
 
   // Function to open the edit popup and set the editingBookingId and updatedStatus
@@ -107,7 +116,7 @@ const AllBookings = () => {
                 <div>
                   <button
                     id="dropdownActionButton"
-                    onClick={handleDropdownAction}
+                    onClick={DeleteBooking}
                     className="inline-flex items-center text-red-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                     type="button"
                   >

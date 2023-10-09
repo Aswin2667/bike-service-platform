@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus,getBookingsByIds} = require("../controllers/BookingController");
+const {addBooking,getAllBookingsWithCustomerDetails,updateBookingStatus,getBookingsByIds,getBookingByUserId , deleteBookingById} = require("../controllers/BookingController");
 
 /**
  * @swagger
@@ -115,7 +115,12 @@ router.put("/:bookingId/status" ,updateBookingStatus)
 
 
 router.get('/getbookingsbyids', getBookingsByIds )
-  
+
+
+
+router.get('/getBookingByUserId', getBookingByUserId )
+
+  router.delete("/remove/",deleteBookingById)
 
 
 module.exports = router

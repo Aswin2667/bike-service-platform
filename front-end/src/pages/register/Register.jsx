@@ -74,7 +74,7 @@ const Register = () => {
             className="w-full px-4 py-2 bg-transparent border-4 border-purple-600 rounded-md text-white text-lg mb-4 focus:outline-none focus:border-purple-400"
           />
           <input
-            type="numeric"
+            type="number"
             placeholder="Mobile Number"
             required
             name="phonenumber"

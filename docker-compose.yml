@@ -1,0 +1,33 @@
+version: "3"
+services:
+  frontend:
+    image: aswin96777/project-frontend:latest
+    container_name: bike-service-ui
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - mern-networks
+  backend:
+    image: aswin96777/project-backend:latest
+    container_name: bike-service-backend
+    ports:
+      - "9090:9090"
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - mern-networks
+  database:
+    image: mongo
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    networks:
+      - mern-networks
+networks:
+  mern-networks:
+    driver: bridge

@@ -11,7 +11,7 @@ Follow these steps to manually set up the Bike Service Application:
 1. Clone the repository:
 
    ```
-  git clone https://github.com/Aswin2667/Project.git
+   git clone https://github.com/Aswin2667/Project.git
    ```
 
 2. Change into the frontend directory:

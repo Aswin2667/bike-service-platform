@@ -11,7 +11,7 @@ Follow these steps to manually set up the Bike Service Application:
 1. Clone the repository:
 
    ```
-   git clone https://github.com/Aswin2667/Bike-service-application.git
+  git clone https://github.com/Aswin2667/Project.git
    ```
 
 2. Change into the frontend directory:
@@ -29,7 +29,7 @@ Follow these steps to manually set up the Bike Service Application:
 4. Change into the backend directory:
 
    ```
-   cd ../back-end
+   cd back-end
    ```
 
 5. Install backend dependencies:
@@ -59,7 +59,7 @@ If you prefer using Docker Compose, follow these steps:
 1. Clone the repository:
 
    ```
-   git clone https://github.com/Aswin2667/Bike-service-application.git
+   git clone https://github.com/Aswin2667/Project.git
    ```
 
 2. Make sure you have Docker and Docker Compose installed on your local machine.
@@ -67,7 +67,7 @@ If you prefer using Docker Compose, follow these steps:
 3. Change into the project directory:
 
    ```
-   cd Bike-service-application
+   cd Project
    ```
 
 4. Run Docker Compose to start both frontend and backend containers:

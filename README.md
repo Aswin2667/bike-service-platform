@@ -39,7 +39,7 @@ Follow these steps to manually set up the Bike Service Application:
    ```
 
 6. Make sure MongoDB is installed on your local machine.
-
+if you have error when connect to mongo db change the url in .env file from localhost to 127.0.0.1 
 7. Start the frontend:
 
    ```

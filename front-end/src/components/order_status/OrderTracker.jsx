@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./orderstatus.css";
 
 const OrderTracker = ({ status }) => {
-  const [bookedCompleted, setBookedCompleted] = useState(false);
-  const [pendingCompleted, setPendingCompleted] = useState(false);
+  const [bookedCCompleted, setBookedCompleted] = useState(false);
+  const [pendingCompleted, setPendingCompleted] = useState(true);
   const [readyfordeliver,setReadyforDeliveryf] = useState(false)
   useEffect(() => {
     // Update the completed states based on the status prop
     if (status === "completed") {
-      setBookedCompleted(true); // Mark "Booked" as completed
       setPendingCompleted(true); // Mark "Pending" as completed
       setReadyforDeliveryf(true);
     } else if (status === "ready for delivery") {
@@ -24,7 +23,7 @@ const OrderTracker = ({ status }) => {
             <span className="is-complete"></span>
             <p className="p-0">Booked</p>
           </div>
-          <div className={`order-tracking ${pendingCompleted ? "completed" : ""}`}>
+          <div className={`order-tracking completed`}>
             <span className="is-complete"></span>
             <p className="p-0">Pending</p>
           </div>
